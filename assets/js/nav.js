@@ -42,19 +42,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 switch (page) {
                     case "fifa":
-                     getTeams(2000);
+                    //  getTeams(2000);
                      break;
 
                     case "uefa":
-                     getTeams(2001);
+                    //  getTeams(2001);
                      break;
                     
                     case "favorite":
-                     getFavoriteTeams();
+                    //  getFavoriteTeams();
                      break;
 
                     default:
-                     getTeams(2001);
+                    //  getTeams(2001);
                      break;
                 }
 
