@@ -1,0 +1,37 @@
+{
+    "name": "Footballpedia",
+    "short_name": "footballpedia",
+    "theme_color": "#019688",
+    "background_color": "#019688",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/index.html",
+    "gcm_sender_id:": "",
+    "icons": [
+        {
+            "src": "assets/images/icon/favicon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/icon/favicon-96x096.png",
+            "sizes": "96x096",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/icon/favicon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/icon/favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/images/icon/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+  }
