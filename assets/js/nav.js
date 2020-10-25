@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         };
-        xhttp.open("GET", "pages/home.html", TRUE);
+        xhttp.open("GET", "pages/home.html", true);
         xhttp.send();
     }
 })
