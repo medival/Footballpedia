@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadNav() {
         let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = () => {
+        xhttp.onreadystatechange =  function () {
             if (this.readyState === 4) {
                 if (this.status !== 200) return;
 
@@ -42,19 +42,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 switch (page) {
                     case "fifa":
-                    //  getTeams(2000);
+                     getTeams(2000);
                      break;
 
                     case "uefa":
-                    //  getTeams(2001);
+                     getTeams(2001);
                      break;
                     
                     case "favorite":
-                    //  getFavoriteTeams();
+                     getFavoriteTeams();
                      break;
 
                     default:
-                    //  getTeams(2001);
+                     getTeams(2001);
                      break;
                 }
 
