@@ -2,8 +2,8 @@ let baseUrl = 'https://api.football-data.org/v2/';
 const authToken = '0dd585b1af05408ab6ae1d12cdb63462';
 
 // Fetch competition
-const fetchApi = (baseUrl, id) => {
-    return fetch(`${baseUrl}competitions/${id}/teams`, {
+const fetchApi = (baseUrl, competitionId) => {
+    return fetch(`${baseUrl}competitions/${competitionId}/teams`, {
         headers: {
             'X-Auth-Token': authToken
         }
@@ -36,11 +36,12 @@ function cacheCompetition(id) {
     .then(status);
 }
 
+
 // Request Data
-function getTeams(teamId) {
+function getTeams(competitionId) {
 
     if('caches' in window) {
-        caches.match(`${baseUrl}competitions/${teamId}/teams`)
+        caches.match(`${baseUrl}competitions/${competitionId}/teams`)
         .then((response) => {
             if(response) {
                 response.json().then((data) => {
@@ -61,14 +62,15 @@ function getTeams(teamId) {
         });
     }
 
-    fetchApi(baseUrl, id)
+    fetchApi(baseUrl, competitionId)
      .then(status)
      .then(json)
      .then((data) => {
 
+        // console.log(data.teams);
         // Menyusun Card Artikel
         let teamsHTML = "";
-        changeLeague(data);
+        // changeLeague(data);
 
         data.teams.forEach(team => {
             if(team.crestUrl !== null && team.crestUrl !== "") {
@@ -76,6 +78,7 @@ function getTeams(teamId) {
             } else {
                 console.assert(`${team.name} dont have a logo`);
             }
+            // console.log(team);
         });
         
         document.getElementById("teams").innerHTML = teamsHTML;
@@ -87,12 +90,15 @@ function getTeamById() {
         let urlParams = new URLSearchParams(window.location.search);
         let idParam = urlParams.get("id");
 
+        console.log(idParam);
+        // console.log(idParam);
         if ('caches' in window) {
             caches.match(`${baseUrl}teams/${idParam}`)
             .then((response) => {
                 if(response) {
                     response.json()
                     .then((data) => {
+                        
                         changeTeamData(data);
 
                         showClubMember(data);
@@ -102,9 +108,12 @@ function getTeamById() {
             })
             .catch(error);
         }
-
-        fetch(`${baseUrl}teams/${idParam}`, {
-            heades: {
+        // console.log('Test');
+        // https://api.football-data.org/v2/teams/851
+        let endPoint = `${baseUrl}teams/${idParam}`;
+        // console.log(endPoint);
+        fetch(endPoint, {
+            headers: {
                 "X-Auth-Token": authToken
             }
         })
@@ -157,7 +166,7 @@ function getSavedTeams(){
                             </div>
                             <div class="card-action">
                                 <span class="col s6 left-align founded"> ${team.founded} </span>
-                                <span class="col s6 right-align nation"> ${nation}</span>
+                                <span class="col s6 right-align nation"> ${team.area.name}</span>
                             </div>
                         </div>
                     </div>
@@ -219,19 +228,19 @@ function changeTeamData(data) {
 
     if (teamVenue === null) teamVenue = "-";
 
-    teamLastUpdateElement.innerText = teamLastUpdated;
-    teamNationElement.setAttribute('data-badge-caption', teamNation);
-    teamNameElement.innerHTML = teamFoundedDate;
-    teamLogoElement.setAttribute('src', teamCrestSrc);
-    teamLogoElement.setAttribute('alt', teamName);
-    teamLogoElement.setAttribute('title', teamName);
-    teamWebsiteElement.innerHTML = `<a href="${teamWebsite}" target="_blank">${teamWebsite}</a>`;
-    teamColorElement.innerText = teamColor;
-    teamVenueElement.innerText = teamVenue;
+    // teamLastUpdateElement.innerText = teamLastUpdated;
+    // teamNationElement.setAttribute('data-badge-caption', teamNation);
+    // teamNameElement.innerHTML = teamFoundedDate;
+    // teamLogoElement.setAttribute('src', teamCrestSrc);
+    // teamLogoElement.setAttribute('alt', teamName);
+    // teamLogoElement.setAttribute('title', teamName);
+    // teamWebsiteElement.innerHTML = `<a href="${teamWebsite}" target="_blank">${teamWebsite}</a>`;
+    // teamColorElement.innerText = teamColor;
+    // teamVenueElement.innerText = teamVenue;
 }
 
 function showClubMember(data) {
-    let clubMemberHTML = `
+    let squadHTML = `
         <div class="row">
             <div class="col s1"><b>#</b></div>
             <div class="col s3"><b>Name</b></div>
@@ -240,46 +249,46 @@ function showClubMember(data) {
             <div class="col s2"><b>Role</b></div>
         </div>
     `;
-    data.members.forEach(member => {
+    data.squad.forEach(player => {
         let number = "";
         let position = "";
 
-        (member.number === null) ? (number = "-") : (number = member.number);
-        (member.position === null) ? (position = "-") : (postion = member.postion);
+        (player.number === null) ? (number = "-") : (number = player.number);
+        (player.position === null) ? (position = "-") : (position = player.position);
 
-        clubMemberHTML += `
+        squadHTML += `
             <div class="row">
                 <div class="col s1">${number}</div>
-                <div class="col s3">${member.name}</div>
-                <div class="col s3">${member.position}</div>
-                <div class="col s3">${member.nationality}</div>
-                <div class="col s2">${member.role}</div>
+                <div class="col s3">${player.name}</div>
+                <div class="col s3">${player.position}</div>
+                <div class="col s3">${player.nationality}</div>
+                <div class="col s2">${player.role}</div>
             </div>
         `;
     });
 
-    document.getElementById("club-member").innerHTML = clubMemberHTML;
+    document.getElementById("squadPlayer").innerHTML = squadHTML;
 }
 
 function inputCards(team) {
     let card;
     let src = team.crestUrl;
-    let nationa = team.area.name;
+    let nation = team.area.name;
 
     card = `
-        <div class="col s12 m4 l3 card-wrapper">
-            <div class="card">
-                <a href="./team.html?id=${team.id}">
-                    <div class="card-image waves-effect waves-block waves-light">
-                        <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
+        <div class="col s12 m6 l3 card-wrapper">
+            <div class="club-wrapper">
+                <div class="club-info">
+                    <a href="./team.html?id=${team.id}">
+                        <div class="club-image waves-effect waves-block waves-light">
+                            <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
+                        </div>
+                    </a>
+                    <div class="card-content center-align">
+                        <h6>${team.shortName}</h6>
                     </div>
-                </a>
-                <div class="card-content center-align">
-                    <span class="card-title">${team.shortName}</span>
-                </div>
-                <div class="card-action">
-                    <span class="col s6 left-align founded">${team.founded}</span>
-                    <span class="col s6 right-align founded">${nation}</span>
+                    <div class="card-action">
+                    </div>
                 </div>
             </div>
         </div>

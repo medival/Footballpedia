@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 let content = document.querySelector("#body-content");
 
                 switch (page) {
-                    case "fifa":
-                     getTeams(2000);
+                    case "premier":
+                     getTeams(2021);
                      break;
 
                     case "uefa":
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                      break;
                     
                     case "favorite":
-                     getFavoriteTeams();
+                    //  getFavoriteTeams();
                      break;
 
                     default:
@@ -73,4 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.open("GET", "pages/home.html", true);
         xhttp.send();
     }
+
+    cacheCompetition(2001);
+    cacheCompetition(2021);
 })

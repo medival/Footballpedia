@@ -1,0 +1,27 @@
+.card-wrapper {
+    /* background-color : blue; */
+    margin-bottom: 2em;
+
+}
+
+.club-info {
+    margin: auto;
+}
+
+.club-wrapper {
+    width: 90%;
+    display: block;
+    margin: auto;
+    padding-top: 2em;
+    padding-bottom: 1em;
+    border-radius: 0.2rem;
+    border: solid #c7c7c7 3px;
+}
+
+.club-image img {
+    height: 10em;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 1em;
+}
+
