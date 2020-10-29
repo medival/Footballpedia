@@ -1,27 +1,48 @@
 .card-wrapper {
-    /* background-color : blue; */
-    margin-bottom: 2em;
-
+	/* background-color : blue; */
+	margin-bottom: 2em;
 }
 
 .club-info {
-    margin: auto;
+	margin: auto;
+}
+
+.club-info h6 {
+	font-weight: bold;
+	color: #110e17;
 }
 
 .club-wrapper {
-    width: 90%;
-    display: block;
-    margin: auto;
-    padding-top: 2em;
-    padding-bottom: 1em;
-    border-radius: 0.2rem;
-    border: solid #c7c7c7 3px;
+	width: 90%;
+	height: 22em;
+	display: block;
+	margin: auto;
+	padding-top: 2em;
+	border-top: #110e17 2px solid;
+	border-radius: 0.2rem;
+	margin-bottom: 7em;
+	/* border: solid #c7c7c7 3px; */
+	box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+		0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+		0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+		0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
-.club-image img {
-    height: 10em;
+/* .club-image img {
     display: block;
     margin: 0 auto;
-    padding-bottom: 1em;
+} */
+
+.team-wrapper {
+	margin-top: 6em;
 }
 
+.team-wrapper img {
+	position: relative;
+	width: 10em;
+	height: 12em;
+}
+
+h4.team-heading {
+	margin-bottom: 1em;
+}

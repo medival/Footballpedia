@@ -26,7 +26,7 @@
     <!-- Navigation -->
     <nav class="teal" role="navigation">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo" id="logo-container">Footballpedia</a>
+            <a href="./index.html" class="brand-logo" id="logo-container">Footballpedia</a>
             <a href="#" class="sidenav-trigger" data-target="nav-mobile"><i class="material-icons">menu</i></a>
 
             <ul class="right">
@@ -42,18 +42,20 @@
     </nav>
     <!-- End of Navigation -->
 
-    <div class="container" id="body-content"></div>
+    <div class="container" id="body-content">
 
-    <div class="container">
-        <!-- Club Member -->
-        <h5> Player </h5>
-        <div class="row">
-            <div class="col s12" id="squadPlayer">
-
+        <div class="team-wrapper">
+            <div class="row">
+                <div id="team-info"></div>
+                </div>
             </div>
+        <hr>
+        <h4> SQUAD Information </h4>
+        <div class="row">
+            <table id="squadPlayer" class="highlight">
+            </table>
         </div>
-    </div>
-
+        </div>
 
     <!-- Footer -->
     <footer>
@@ -121,7 +123,6 @@
     <script src="/assets/js/materialize.min.js"></script>
     <script src="/assets/js/idb.js"></script>
     <script src="/assets/js/preloader.js"></script>
-    <script src="/assets/js/nav.js"></script>
     <script src="/assets/js/api.js"></script>
     <script src="/assets/js/team.js"></script>
     <!-- End of script -->
