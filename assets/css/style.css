@@ -46,3 +46,12 @@
 h4.team-heading {
 	margin-bottom: 1em;
 }
+
+#save-button > i {
+	color: #039688;
+	background-color: white;
+	/* color: white;
+	background-color: #039688; */
+	/* color: #fff; */
+	font-size: 2.2em;
+}

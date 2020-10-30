@@ -46,7 +46,7 @@ function getTeams(competitionId) {
             if(response) {
                 response.json().then((data) => {
                     let teamsHTML = "";
-                    changeLeague(data);
+                    // changeLeague(data);
 
                     data.teams.forEach((team) => {
                         if (team.crestUrl !== null && team.crestUrl !== "") {
@@ -218,21 +218,21 @@ function teamInfo(data) {
     document.getElementById("team-info").innerHTML = teamInfoHTML;
 }
 
-function changeLeague(data) {
-    const endDate = new Date(date.season.endDate).toDateString();
-    const leagueName = data.competition.name;
-    const leagueId = data.competition.id;
-    const imgSrc = `/assets/images/${leagueId}.jpg`;
+// function changeLeague(data) {
+//     const endDate = new Date(date.season.endDate).toDateString();
+//     const leagueName = data.competition.name;
+//     const leagueId = data.competition.id;
+//     const imgSrc = `/assets/images/${leagueId}.jpg`;
 
-    const leagueTitle = document.querySelector('h2.league-name');
-    const leagueImage = document.querySelector('img.league-img');
-    const endDateLeague = docuent.querySelector('.end-date span');
-    leagueTitle.innerText = leagueName;
-    leagueImg.setAttribute("src", imgSrc);
-    leagueImg.setAttribute("alt", leagueName);
-    leagueImg.setAttribute("title", leagueName);
-    endDateLeague.innerText = endDate;
-}
+//     const leagueTitle = document.querySelector('h2.league-name');
+//     const leagueImage = document.querySelector('img.league-img');
+//     const endDateLeague = docuent.querySelector('.end-date span');
+//     leagueTitle.innerText = leagueName;
+//     leagueImg.setAttribute("src", imgSrc);
+//     leagueImg.setAttribute("alt", leagueName);
+//     leagueImg.setAttribute("title", leagueName);
+//     endDateLeague.innerText = endDate;
+// }
 
 function changeTeamData(data) {
     const teamLastUpdated = new Date(data.lastUpdated).toDateString();

@@ -1,6 +1,7 @@
 const CACHE_NAME = "Footballpedia-v1";
 const urlsToCache = [
     "/",
+    "/register-sw.js",
     "/favicon.ico",
     "/index.html",
     "/manifest.json",
@@ -27,27 +28,27 @@ const urlsToCache = [
     "/assets/js/materialize.min.js",
     "/assets/js/nav.js",
     "/assets/js/preloader.js",
-    "/assets/js/service-worker.js",
     "/assets/js/sweetalert2.all.min.js",
     "/assets/js/sweetalert2.min.js",
     "/assets/js/team.js",
-    "/assets/pags/home.html",
+    "/assets/js/index.js",
+    "/pages/home.html"
 ];
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", function (event) {
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
+        caches.open(CACHE_NAME).then(function (cache) {
             return cache.addAll(urlsToCache);
         })
-    )
+    );
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", function (event) {
     let baseUrl = "https://api.football-data.org/v2/";
     if (event.request.url.indexOf(baseUrl) > -1) {
         event.respondWith(
-            cache.open(CACHE_NAME).then((cache) => {
-                return fetch(event.request).then((response) => {
+            caches.open(CACHE_NAME).then(function (cache) {
+                return fetch(event.request).then(function (response) {
                     cache.put(event.request.url, response.clone());
                     return response;
                 })
