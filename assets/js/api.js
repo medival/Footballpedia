@@ -46,7 +46,7 @@ function getTeams(competitionId) {
             if(response) {
                 response.json().then((data) => {
                     let teamsHTML = "";
-                    // changeLeague(data);
+                    let leagueName = data.competition.name;
 
                     data.teams.forEach((team) => {
                         if (team.crestUrl !== null && team.crestUrl !== "") {
@@ -55,8 +55,8 @@ function getTeams(competitionId) {
                             console.log(`${team.name} dont have logo`);
                         }
                     });
-
                     document.getElementById("teams").innerHTML = teamsHTML;
+                    document.getElementById("league-name").innerText = leagueName;
                 })
             }
         });
