@@ -48,3 +48,7 @@ h4.team-heading {
 	background-color: white;
 	font-size: 2.2em;
 }
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
