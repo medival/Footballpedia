@@ -108,10 +108,7 @@ function getTeamById() {
             })
             .catch(error);
         }
-        // console.log('Test');
-        // https://api.football-data.org/v2/teams/851
         let endPoint = `${baseUrl}teams/${idParam}`;
-        // console.log(endPoint);
         fetch(endPoint, {
             headers: {
                 "X-Auth-Token": authToken
@@ -131,7 +128,7 @@ function getTeamById() {
     })
 }
 
-function getSavedTeams(){
+function getFavoriteTeam(){
   getAll().then((teams) => {
         let teamsHTML = "";
 
@@ -143,8 +140,8 @@ function getSavedTeams(){
         //   const imgSrc = ""
         
         titleLeague.innerText = title;
-        imgLeague.setAttribute('src', imgSrc);
-        endDateLeague.style.display = 'none';
+        // imgLeague.setAttribute('src', imgSrc);
+        // endDateLeague.style.display = 'none';
 
         if(teams.length === 0) {
             document.getElementById("teams").innerHTML = '<h5 class="center"> You dont have a favorite soccer team </h5>';
@@ -154,22 +151,22 @@ function getSavedTeams(){
                 let nation = team.area.name;
 
                 teamsHTML += `
-                    <div class="col s12 m4 l3 card-wrapper">
-                        <div class="card">
-                            <a href="./team.html?id=${team.id}&saved=true">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img src"${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}"/>
-                                </div>
-                            </a>
+                <div class="col s12 m6 l3 card-wrapper">
+                    <div class="club-wrapper">
+                        <div class="club-info">
                             <div class="card-content center-align">
-                                <span class="card-title">${team.shortName}</span>
+                                <a href="./team.html?id=${team.id}&favorite=true">
+                                    <div class="club-image waves-effect waves-block waves-light">
+                                        <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
+                                    </div>
+                                </a>
                             </div>
-                            <div class="card-action">
-                                <span class="col s6 left-align founded"> ${team.founded} </span>
-                                <span class="col s6 right-align nation"> ${team.area.name}</span>
+                            <div class="card-action center-align">
+                                <h6>${team.shortName}</h6>
                             </div>
                         </div>
                     </div>
+                </div>
                 `;
             });
             document.getElementById("teams").innerHTML = teamsHTML;
@@ -184,15 +181,13 @@ function getSavedTeamById() {
 
     getById(idParam)
     .then((team) => {
-        teamInfo(data);
+        teamInfo(team);
         showClubMember(team);
     });
     return idParam;
 }
 
 function teamInfo(data) {
-    console.log('Daatanya');
-    console.log(data);
     let teamInfoHTML = `
         <div class="col s5 teamLeft center">
             <img src="${data.crestUrl}" alt="${data.name}" srcset="" class="responsive-img">
@@ -234,37 +229,37 @@ function teamInfo(data) {
 //     endDateLeague.innerText = endDate;
 // }
 
-function changeTeamData(data) {
-    const teamLastUpdated = new Date(data.lastUpdated).toDateString();
-    const teamNation = data.area.name;
-    const teamName = data.name;
-    const teamCrestSrc = data.crestUrl;
-    const teamFounded = data.founded;
-    const teamWebsite = data.website;
-    const teamColor = data.clubColors;
-    let teamVenue = data.venue;
-    const teamFoundedDate = `${teamName} founded at ${teamFounded}`;
+// function changeTeamData(data) {
+//     const teamLastUpdated = new Date(data.lastUpdated).toDateString();
+//     const teamNation = data.area.name;
+//     const teamName = data.name;
+//     const teamCrestSrc = data.crestUrl;
+//     const teamFounded = data.founded;
+//     const teamWebsite = data.website;
+//     const teamColor = data.clubColors;
+//     let teamVenue = data.venue;
+//     const teamFoundedDate = `${teamName} founded at ${teamFounded}`;
     
-    const teamLastUpdateElement = document.querySelector('.last-updated span');
-    const teamNationElement = document.querySelector('.last-updated span.new.badge');
-    const teamNameElement = document.querySelector('h4.team-name');
-    const teamLogoElement = document.querySelector('img.club-logo');
-    const teamWebsiteElement = document.querySelector('#team-website');
-    const teamColorElement = document.querySelector('#team-color');
-    const teamVenueElement = document.querySelector('#team-venue');
+//     const teamLastUpdateElement = document.querySelector('.last-updated span');
+//     const teamNationElement = document.querySelector('.last-updated span.new.badge');
+//     const teamNameElement = document.querySelector('h4.team-name');
+//     const teamLogoElement = document.querySelector('img.club-logo');
+//     const teamWebsiteElement = document.querySelector('#team-website');
+//     const teamColorElement = document.querySelector('#team-color');
+//     const teamVenueElement = document.querySelector('#team-venue');
 
-    if (teamVenue === null) teamVenue = "-";
+//     if (teamVenue === null) teamVenue = "-";
 
-    // teamLastUpdateElement.innerText = teamLastUpdated;
-    // teamNationElement.setAttribute('data-badge-caption', teamNation);
-    // teamNameElement.innerHTML = teamFoundedDate;
-    // teamLogoElement.setAttribute('src', teamCrestSrc);
-    // teamLogoElement.setAttribute('alt', teamName);
-    // teamLogoElement.setAttribute('title', teamName);
-    // teamWebsiteElement.innerHTML = `<a href="${teamWebsite}" target="_blank">${teamWebsite}</a>`;
-    // teamColorElement.innerText = teamColor;
-    // teamVenueElement.innerText = teamVenue;
-}
+//     // teamLastUpdateElement.innerText = teamLastUpdated;
+//     // teamNationElement.setAttribute('data-badge-caption', teamNation);
+//     // teamNameElement.innerHTML = teamFoundedDate;
+//     // teamLogoElement.setAttribute('src', teamCrestSrc);
+//     // teamLogoElement.setAttribute('alt', teamName);
+//     // teamLogoElement.setAttribute('title', teamName);
+//     // teamWebsiteElement.innerHTML = `<a href="${teamWebsite}" target="_blank">${teamWebsite}</a>`;
+//     // teamColorElement.innerText = teamColor;
+//     // teamVenueElement.innerText = teamVenue;
+// }
 
 // Convert Date to Age
 const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10);

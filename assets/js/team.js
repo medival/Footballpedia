@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     let urlParams = new URLSearchParams(window.location.search);
-    let isFromSaved = urlParams.get("saved");
+    let isFromSaved = urlParams.get("favorite");
     let idParam = Number(urlParams.get("id"));
     let item;
     let teamId;
-    const btnSave = document.getElementById("save-button");
+    const buttonSave = document.getElementById("save-button");
 
     if (isFromSaved) {
         teamId = getSavedTeamById();
@@ -23,25 +23,44 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // getById(idParam)
-    // .then(team => {
-    //     if (team) {
-    //         btnSave.firstElementChild.innerText = 'favorite';
-    //     } else {
-    //         btnSave.firstElementChild.innerText = 'favorite_border';
-    //     }
-    // });
+    getById(idParam)
+    .then(team => {
+        if (team) {
+            buttonSave.firstElementChild.innerText = 'favorite';
+        } else {
+            buttonSave.firstElementChild.innerText = 'favorite_border';
+        }
+    });
 
-    // btnSave.onclick = async function () {
-    //     console.log("Saved button clicked");
+    buttonSave.onclick = async function () {
+        console.log("Saved button clicked");
 
-    //     const isTeamSaved = await getById(idParam);
+        const isTeamSaved = await getById(idParam);
 
-    //     if (!isTeamSaved) {
-    //         btnSave.firstElementChild.innerText = 'favorite';
-    //         saveForLater(item);
-    //     } else {
-
-    //     }
-    // }
+        if (!isTeamSaved) {
+            buttonSave.firstElementChild.innerText = 'favorite';
+            saveToFavorite(item);
+        } else {
+            if (isFromSaved) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You will remove this item from favorite?',
+                    icon:'warning',
+                    showCancelButton: true,
+                    confirmButton: '#039688',
+                    cancelButtonColor: '$d33',
+                    confirmButtonText: 'Yes, remove it!'
+                }).then((result) => {
+                    if (result.value) {
+                        buttonSave.firstElementChild = 'favorite_border';
+                        deleteFavTeam(teamId);
+                        window.location.href = 'index.html#favorite';
+                    }
+                })
+            } else {
+                buttonSave.firstElementChild.innerText = 'favorite_border';
+                deleteFavTeam(item.id);
+            }
+        }
+    }
 })

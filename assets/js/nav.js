@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                      break;
                     
                     case "favorite":
-                    //  getFavoriteTeams();
+                     getFavoriteTeam();
                      break;
 
                     default:
