@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function() {
     getById(idParam)
     .then(team => {
         if (team) {
-            buttonSave.firstElementChild.innerText = 'favorite';
+            buttonSave.firstElementChild.innerText = 'bookmark';
         } else {
-            buttonSave.firstElementChild.innerText = 'favorite_border';
+            buttonSave.firstElementChild.innerText = 'bookmark_border';
         }
     });
 
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const isTeamSaved = await getById(idParam);
 
         if (!isTeamSaved) {
-            buttonSave.firstElementChild.innerText = 'favorite';
+            buttonSave.firstElementChild.innerText = 'bookmark';
             saveToFavorite(item);
         } else {
             if (isFromSaved) {
@@ -52,13 +52,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     confirmButtonText: 'Yes, remove it!'
                 }).then((result) => {
                     if (result.value) {
-                        buttonSave.firstElementChild = 'favorite_border';
+                        buttonSave.firstElementChild = 'bookmark_border';
                         deleteFavTeam(teamId);
                         window.location.href = 'index.html#favorite';
                     }
                 })
             } else {
-                buttonSave.firstElementChild.innerText = 'favorite_border';
+                buttonSave.firstElementChild.innerText = 'bookmark_border';
                 deleteFavTeam(item.id);
             }
         }
