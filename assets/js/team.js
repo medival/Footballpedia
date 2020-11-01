@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (result.value) {
                         buttonSave.firstElementChild = 'bookmark_border';
                         deleteFavTeam(teamId);
-                        window.location.href = 'index.html#favorite';
+                        window.location.href = '/../index.html#favorite';
                     }
                 })
             } else {

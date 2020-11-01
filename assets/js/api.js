@@ -126,9 +126,6 @@ function getFavoriteTeam(){
         let teamsHTML = "";
 
         const titleLeague = document.querySelector('h2.league-name');
-        const imgLeague = document.querySelector("img.league-img");
-        const endDateLeague = document.querySelector('.end-date>p');
-
         const title = "Favorite Team";
         
         titleLeague.innerText = title;
@@ -137,6 +134,8 @@ function getFavoriteTeam(){
             document.getElementById("teams").innerHTML = '<h5 class="center"> You dont have a favorite soccer team </h5>';
         } else {
             teams.forEach((team) => {
+                let src = team.crestUrl;
+
                 teamsHTML += `
                 <div class="col s12 m6 l3 card-wrapper">
                     <div class="club-wrapper">
