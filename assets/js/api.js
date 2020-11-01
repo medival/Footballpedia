@@ -66,11 +66,7 @@ function getTeams(competitionId) {
      .then(status)
      .then(json)
      .then((data) => {
-
-        // console.log(data.teams);
-        // Menyusun Card Artikel
         let teamsHTML = "";
-        // changeLeague(data);
 
         data.teams.forEach(team => {
             if(team.crestUrl !== null && team.crestUrl !== "") {
@@ -78,7 +74,6 @@ function getTeams(competitionId) {
             } else {
                 console.assert(`${team.name} dont have a logo`);
             }
-            // console.log(team);
         });
         
         document.getElementById("teams").innerHTML = teamsHTML;
@@ -91,7 +86,6 @@ function getTeamById() {
         let idParam = urlParams.get("id");
 
         console.log(idParam);
-        // console.log(idParam);
         if ('caches' in window) {
             caches.match(`${baseUrl}teams/${idParam}`)
             .then((response) => {
@@ -100,7 +94,6 @@ function getTeamById() {
                     .then((data) => {
                         
                         teamInfo(data);
-
                         showClubMember(data);
                         resolve(data);
                     })
@@ -137,25 +130,19 @@ function getFavoriteTeam(){
         const endDateLeague = document.querySelector('.end-date>p');
 
         const title = "Favorite Team";
-        //   const imgSrc = ""
         
         titleLeague.innerText = title;
-        // imgLeague.setAttribute('src', imgSrc);
-        // endDateLeague.style.display = 'none';
 
         if(teams.length === 0) {
             document.getElementById("teams").innerHTML = '<h5 class="center"> You dont have a favorite soccer team </h5>';
         } else {
             teams.forEach((team) => {
-                let src = team.crestUrl;
-                let nation = team.area.name;
-
                 teamsHTML += `
                 <div class="col s12 m6 l3 card-wrapper">
                     <div class="club-wrapper">
                         <div class="club-info">
                             <div class="card-content center-align">
-                                <a href="./team.html?id=${team.id}&favorite=true">
+                                <a href="/pages/team.html?id=${team.id}&favorite=true">
                                     <div class="club-image waves-effect waves-block waves-light">
                                         <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
                                     </div>
@@ -213,54 +200,6 @@ function teamInfo(data) {
     document.getElementById("team-info").innerHTML = teamInfoHTML;
 }
 
-// function changeLeague(data) {
-//     const endDate = new Date(date.season.endDate).toDateString();
-//     const leagueName = data.competition.name;
-//     const leagueId = data.competition.id;
-//     const imgSrc = `/assets/images/${leagueId}.jpg`;
-
-//     const leagueTitle = document.querySelector('h2.league-name');
-//     const leagueImage = document.querySelector('img.league-img');
-//     const endDateLeague = docuent.querySelector('.end-date span');
-//     leagueTitle.innerText = leagueName;
-//     leagueImg.setAttribute("src", imgSrc);
-//     leagueImg.setAttribute("alt", leagueName);
-//     leagueImg.setAttribute("title", leagueName);
-//     endDateLeague.innerText = endDate;
-// }
-
-// function changeTeamData(data) {
-//     const teamLastUpdated = new Date(data.lastUpdated).toDateString();
-//     const teamNation = data.area.name;
-//     const teamName = data.name;
-//     const teamCrestSrc = data.crestUrl;
-//     const teamFounded = data.founded;
-//     const teamWebsite = data.website;
-//     const teamColor = data.clubColors;
-//     let teamVenue = data.venue;
-//     const teamFoundedDate = `${teamName} founded at ${teamFounded}`;
-    
-//     const teamLastUpdateElement = document.querySelector('.last-updated span');
-//     const teamNationElement = document.querySelector('.last-updated span.new.badge');
-//     const teamNameElement = document.querySelector('h4.team-name');
-//     const teamLogoElement = document.querySelector('img.club-logo');
-//     const teamWebsiteElement = document.querySelector('#team-website');
-//     const teamColorElement = document.querySelector('#team-color');
-//     const teamVenueElement = document.querySelector('#team-venue');
-
-//     if (teamVenue === null) teamVenue = "-";
-
-//     // teamLastUpdateElement.innerText = teamLastUpdated;
-//     // teamNationElement.setAttribute('data-badge-caption', teamNation);
-//     // teamNameElement.innerHTML = teamFoundedDate;
-//     // teamLogoElement.setAttribute('src', teamCrestSrc);
-//     // teamLogoElement.setAttribute('alt', teamName);
-//     // teamLogoElement.setAttribute('title', teamName);
-//     // teamWebsiteElement.innerHTML = `<a href="${teamWebsite}" target="_blank">${teamWebsite}</a>`;
-//     // teamColorElement.innerText = teamColor;
-//     // teamVenueElement.innerText = teamVenue;
-// }
-
 // Convert Date to Age
 const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10);
 
@@ -311,7 +250,7 @@ function inputCards(team) {
             <div class="club-wrapper">
                 <div class="club-info">
                     <div class="card-content center-align">
-                        <a href="./team.html?id=${team.id}">
+                        <a href="/pages/team.html?id=${team.id}">
                             <div class="club-image waves-effect waves-block waves-light">
                                 <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
                             </div>

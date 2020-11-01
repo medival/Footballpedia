@@ -1,12 +1,13 @@
 const CACHE_NAME = "Footballpedia-v1";
 const urlsToCache = [
     "/",
+    "/push.js",
     "/register-sw.js",
     "/favicon.ico",
     "/index.html",
     "/manifest.json",
-    "/nav.html",
-    "/team.html",
+    "/pages/nav.html",
+    "/pages/team.html",
     "/assets/css/material-icons.css",
     "/assets/css/materialize.min.css",
     "/assets/css/preloader.css",

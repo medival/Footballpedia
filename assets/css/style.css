@@ -28,10 +28,6 @@
 		0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
-/* .club-image img {
-    display: block;
-    margin: 0 auto;
-} */
 
 .team-wrapper {
 	margin-top: 3em;
@@ -50,8 +46,5 @@ h4.team-heading {
 #save-button > i {
 	color: #039688;
 	background-color: white;
-	/* color: white;
-	background-color: #039688; */
-	/* color: #fff; */
 	font-size: 2.2em;
 }

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         };
-        xhttp.open("GET", "nav.html", true);
+        xhttp.open("GET", "/pages/nav.html", true);
         xhttp.send();
     }
 
