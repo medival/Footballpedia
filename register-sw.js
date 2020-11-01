@@ -2,52 +2,54 @@ if("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
         navigator.serviceWorker
         .register("service-worker.js")
-        .then(() => {
+        .then(function() {
             console.log("Service Worker is registered");
         })
-        .catch(() => {
+        .catch(function() {
             console.log("Service Worker is fail to register");
         })
-        // requestPermisssion();
+        requestPermisssion();
     });
 } else {
     console.assert("Service Worker is not support this browser");
 }
 
-// function requestPermisssion() {
-//     if ('Notification' in window) {
-//         Notification.requestPermission().then((result) => {
-//             if (result == "denied") {
-//                 console.log("Notification are blocked");
-//                 return;
-//             } else if (result == "default") {
-//                 console.log("User close the dialog box");
-//                 return;
-//             }
+function requestPermisssion() {
+    if ('Notification' in window) {
+        Notification.requestPermission().then((result) => {
+            if (result == "denied") {
+                console.log("Notification are blocked");
+                return;
+            } else if (result == "default") {
+                console.log("User close the dialog box");
+                return;
+            }
 
-//             if ('PushManager' in window) {
-//                 navigator.serviceWorker.getRegistration()
-//                 .then((registration) => {
-//                     registration.pushManager.subscribe({
-//                         userVisibleOnly: true,
-//                         applicationServerKey: urlBase64ToUint8Array("")
-//                     })
-//                 }).then((subscribe) => {
-//                     console.log('Success subscribe with endpoint  :', subscribe.endpoint);
-//                     console.log('Success subscribe with p256dh key ', btoa(String.fromCharCode
-//                         .apply(
-//                             null, new Uint8Array(subscribe.getKey('p256dh')))));
-//                 }).catch(function (e) {
-//                     console.error('Cant subscribe : ', e.message);
-//                 })
-//             }
-//         });
-//     }
-// }
+            if (('PushManager' in window)) {
+                navigator.serviceWorker.getRegistration().then(function (registration) {
+                        registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: urlBase64ToUint8Array("BPRAY-ojYCOg2HJSYtSIc7pcxh8Xi38NXUrY8mvv4XI7Wx134vDJUG9om6agVNogbDa2ZKNrQn8nrDIJWtOwUWo")
+                    }).then(function (subscribe) {
+                        console.log('Success subscribe with endpoint  :', subscribe.endpoint);
+                        console.log('Success subscribe with p256dh key :', btoa(String.fromCharCode
+                            .apply(
+                                null, new Uint8Array(subscribe.getKey('p256dh')))));
+                        console.log('Berhasil melakukan subscribe dengan auth key: ', btoa(String.fromCharCode
+                            .apply(
+                                null, new Uint8Array(subscribe.getKey('auth')))));
+                    }).catch(function (e) {
+                        console.error('Cant subscribe : ', e.message);
+                    })
+                })
+            }
+        })
+    }
+}
 
 function urlBase64ToUint8Array(base64String) {
-    const padding = "-"((4 - base64String.length % 4) % 4);
-    const base64 = (base64 + padding)
+    const padding = "=".repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
         .replace(/-/g, '+')
         .replace(/_/g, '/');
     const rawData = window.atob(base64);
