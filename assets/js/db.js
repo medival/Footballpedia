@@ -11,7 +11,7 @@ function saveToFavorite(team) {
 			let tx = db.transaction("teams", "readwrite");
 			let store = tx.objectStore("teams");
 			console.log(team);
-			store.add(team);
+			store.put(team);
 			return tx.complete;
 		})
 		.then(function () {
