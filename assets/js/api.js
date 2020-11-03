@@ -1,149 +1,159 @@
-let baseUrl = 'https://api.football-data.org/v2/';
-const authToken = '0dd585b1af05408ab6ae1d12cdb63462';
+let baseUrl = "https://api.football-data.org/v2/";
+const authToken = "0dd585b1af05408ab6ae1d12cdb63462";
 
 // Fetch competition
 const fetchApi = (baseUrl, competitionId) => {
-    return fetch(`${baseUrl}competitions/${competitionId}/teams`, {
-        headers: {
-            'X-Auth-Token': authToken
-        }
-    });
-}
+	return fetch(`${baseUrl}competitions/${competitionId}/teams`, {
+		headers: {
+			"X-Auth-Token": authToken,
+		},
+	});
+};
 
 // If respons OK
 function status(response) {
-    if(response.status !== 200) {
-        console.log(`Error : ${response.status}`);
-        return Promise.reject(new Error(response.statusText));
-    } else {
-        return Promise.resolve(response);
-    }   
+	if (response.status !== 200) {
+		console.log(`Error : ${response.status}`);
+		return Promise.reject(new Error(response.statusText));
+	} else {
+		return Promise.resolve(response);
+	}
 }
 
 // Parsing JSON to Array
 function json(response) {
-    return response.json();
+	return response.json();
 }
 
 // Catch error
 function error(error) {
-    console.log(`Error : ${error}`);
+	console.log(`Error : ${error}`);
 }
 
 // Cache All Team
 function cacheCompetition(id) {
-    fetchApi(baseUrl, id)
-    .then(status);
+	fetchApi(baseUrl, id).then(status);
 }
-
 
 // Request Data
 function getTeams(competitionId) {
+	if ("caches" in window) {
+		caches
+			.match(`${baseUrl}competitions/${competitionId}/teams`)
+			.then((response) => {
+				if (response) {
+					response.json().then((data) => {
+						let teamsHTML = "";
+						let leagueName = data.competition.name;
 
-    if('caches' in window) {
-        caches.match(`${baseUrl}competitions/${competitionId}/teams`)
-        .then((response) => {
-            if(response) {
-                response.json().then((data) => {
-                    let teamsHTML = "";
-                    let leagueName = data.competition.name;
+						data.teams.forEach((team) => {
+							if (
+								team.crestUrl !== null &&
+								team.crestUrl !== ""
+							) {
+								teamsHTML += inputCards(team);
+							} else {
+								console.log(`${team.name} dont have logo`);
+							}
+						});
+						document.getElementById("teams").innerHTML = teamsHTML;
+						document.getElementById(
+							"league-name"
+						).innerText = leagueName;
+					});
+				}
+			});
+	}
 
-                    data.teams.forEach((team) => {
-                        if (team.crestUrl !== null && team.crestUrl !== "") {
-                            teamsHTML += inputCards(team);
-                        } else {
-                            console.log(`${team.name} dont have logo`);
-                        }
-                    });
-                    document.getElementById("teams").innerHTML = teamsHTML;
-                    document.getElementById("league-name").innerText = leagueName;
-                })
-            }
-        });
-    }
+	fetchApi(baseUrl, competitionId)
+		.then(status)
+		.then(json)
+		.then((data) => {
+			let teamsHTML = "";
 
-    fetchApi(baseUrl, competitionId)
-     .then(status)
-     .then(json)
-     .then((data) => {
-        let teamsHTML = "";
+			data.teams.forEach((team) => {
+				if (team.crestUrl !== null && team.crestUrl !== "") {
+					teamsHTML += inputCards(team);
+				} else {
+					console.assert(`${team.name} dont have a logo`);
+				}
+			});
 
-        data.teams.forEach(team => {
-            if(team.crestUrl !== null && team.crestUrl !== "") {
-                teamsHTML += inputCards(team);
-            } else {
-                console.assert(`${team.name} dont have a logo`);
-            }
-        });
-        
-        document.getElementById("teams").innerHTML = teamsHTML;
-     })
+			document.getElementById("teams").innerHTML = teamsHTML;
+		});
 }
 
 function getTeamById() {
-    return new Promise((resolve, reject) => {
-        let urlParams = new URLSearchParams(window.location.search);
-        let idParam = urlParams.get("id");
+	return new Promise((resolve, reject) => {
+		let urlParams = new URLSearchParams(window.location.search);
+		let idParam = urlParams.get("id");
 
-        console.log(idParam);
-        if ('caches' in window) {
-            caches.match(`${baseUrl}teams/${idParam}`)
-            .then((response) => {
-                if(response) {
-                    response.json()
-                    .then((data) => {
-                        
-                        teamInfo(data);
-                        showClubMember(data);
-                        resolve(data);
-                    })
-                }
-            })
-            .catch(error);
-        }
-        let endPoint = `${baseUrl}teams/${idParam}`;
-        fetch(endPoint, {
-            headers: {
-                "X-Auth-Token": authToken
-            }
-        })
-        .then(status)
-        .then(json)
-        .then((data) => {
-            teamInfo(data);
+		console.log(idParam);
+		if ("caches" in window) {
+			caches
+				.match(`${baseUrl}teams/${idParam}`)
+				.then((response) => {
+					if (response) {
+						response.json().then((data) => {
+							teamInfo(data);
+							showClubMember(data);
+							resolve(data);
+						});
+					}
+				})
+				.catch(error);
+		}
+		let endPoint = `${baseUrl}teams/${idParam}`;
+		fetch(endPoint, {
+			headers: {
+				"X-Auth-Token": authToken,
+			},
+		})
+			.then(status)
+			.then(json)
+			.then((data) => {
+				teamInfo(data);
 
-            showClubMember(data);
-            resolve(data);
-        })
-        .catch(err => {
-            return reject(err);
-        })
-    })
+				showClubMember(data);
+				resolve(data);
+			})
+			.catch((err) => {
+				return reject(err);
+			});
+	});
 }
 
-function getFavoriteTeam(){
-  getAll().then((teams) => {
-        let teamsHTML = "";
+function getFavoriteTeam() {
+	getAll().then((teams) => {
+		let teamsHTML = "";
 
-        const titleLeague = document.querySelector('h2.league-name');
-        const title = "Favorite Team";
-        
-        titleLeague.innerText = title;
+		const titleLeague = document.querySelector("h2.league-name");
+		const title = "Favorite Team";
 
-        if(teams.length === 0) {
-            document.getElementById("teams").innerHTML = '<h5 class="center"> You dont have a favorite soccer team </h5>';
-        } else {
-            teams.forEach((team) => {
-                let src = team.crestUrl;
+		titleLeague.innerText = title;
 
-                teamsHTML += `
+		if (teams.length === 0) {
+			document.getElementById("teams").innerHTML =
+				'<h5 class="center"> You dont have a favorite soccer team </h5>';
+		} else {
+			teams.forEach((team) => {
+				let src = team.crestUrl;
+
+				teamsHTML += `
                 <div class="col s12 m6 l3 card-wrapper">
                     <div class="club-wrapper">
                         <div class="club-info">
                             <div class="card-content center-align">
-                                <a href="/pages/team.html?id=${team.id}&favorite=true">
+                                <a href="/pages/team.html?id=${
+									team.id
+								}&favorite=true">
                                     <div class="club-image waves-effect waves-block waves-light">
-                                        <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
+                                        <img src="${src.replace(
+											/^http:\/\//i,
+											"https://"
+										)}" class="responsive-img" alt="${
+					team.shortName
+				}" title="${team.shortName}">
                                     </div>
                                 </a>
                             </div>
@@ -154,27 +164,25 @@ function getFavoriteTeam(){
                     </div>
                 </div>
                 `;
-            });
-            document.getElementById("teams").innerHTML = teamsHTML;
-        }
-  })
+			});
+			document.getElementById("teams").innerHTML = teamsHTML;
+		}
+	});
 }
 
-
 function getSavedTeamById() {
-    let urlParams = new URLSearchParams(window.location.search);
-    let idParam = Number(urlParams.get("id"));
+	let urlParams = new URLSearchParams(window.location.search);
+	let idParam = Number(urlParams.get("id"));
 
-    getById(idParam)
-    .then((team) => {
-        teamInfo(team);
-        showClubMember(team);
-    });
-    return idParam;
+	getById(idParam).then((team) => {
+		teamInfo(team);
+		showClubMember(team);
+	});
+	return idParam;
 }
 
 function teamInfo(data) {
-    let teamInfoHTML = `
+	let teamInfoHTML = `
         <div class="col s5 teamLeft center">
             <img src="${data.crestUrl}" alt="${data.name}" srcset="" class="responsive-img">
             <h5 class="founded">${data.founded}</h5>
@@ -195,16 +203,17 @@ function teamInfo(data) {
                 </div>
         </div>
         `;
-    
-    document.getElementById("team-info").innerHTML = teamInfoHTML;
+
+	document.getElementById("team-info").innerHTML = teamInfoHTML;
 }
 
 // Convert Date to Age
-const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10);
+const getAge = (birthDate) =>
+	Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e10);
 
 function showClubMember(data) {
-    console.log(data);
-    let squadHTML = `
+	console.log(data);
+	let squadHTML = `
         <thead>
             <tr>
                 <th> # </th>
@@ -217,14 +226,18 @@ function showClubMember(data) {
         </thead>
         <tbody>
     `;
-    data.squad.forEach(player => {
-        let shirtNumber = "";
-        let position = "";
+	data.squad.forEach((player) => {
+		let shirtNumber = "";
+		let position = "";
 
-        (player.shirtNumber == null) ? (shirtNumber = "-") : (shirtNumber = player.shirtNumber);
-        (player.position == null) ? (position = "-") : (position = player.position);
+		player.shirtNumber == null
+			? (shirtNumber = "-")
+			: (shirtNumber = player.shirtNumber);
+		player.position == null
+			? (position = "-")
+			: (position = player.position);
 
-        squadHTML += `
+		squadHTML += `
             <tr>
                 <td>${shirtNumber}</td>
                 <td>${player.name}</td>
@@ -234,24 +247,29 @@ function showClubMember(data) {
                 <td>${player.role}</td>
             </tr>
         `;
-    });
-    squadHTML += `</tbody>`;
-    document.getElementById("squadPlayer").innerHTML = squadHTML;
+	});
+	squadHTML += `</tbody>`;
+	document.getElementById("squadPlayer").innerHTML = squadHTML;
 }
 
 function inputCards(team) {
-    let card;
-    let src = team.crestUrl;
-    let nation = team.area.name;
+	let card;
+	let src = team.crestUrl;
+	let nation = team.area.name;
 
-    card = `
+	card = `
         <div class="col s12 m6 l3 card-wrapper">
             <div class="club-wrapper">
                 <div class="club-info">
                     <div class="card-content center-align">
                         <a href="/pages/team.html?id=${team.id}">
                             <div class="club-image waves-effect waves-block waves-light">
-                                <img src="${src.replace(/^http:\/\//i, 'https://')}" class="responsive-img" alt="${team.shortName}" title="${team.shortName}">
+                                <img src="${src.replace(
+									/^http:\/\//i,
+									"https://"
+								)}" class="responsive-img" alt="${
+		team.shortName
+	}" title="${team.shortName}">
                             </div>
                         </a>
                     </div>
@@ -263,5 +281,5 @@ function inputCards(team) {
         </div>
     `;
 
-    return card;
+	return card;
 }

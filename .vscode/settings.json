@@ -1,0 +1,6 @@
+{
+	"editor.stablePeek": true,
+	"editor.tabSize": 2,
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true
+}
