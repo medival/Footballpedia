@@ -1,0 +1,2 @@
+Firebase Hosting	: https://footballpedia-4a00a.web.app
+Vercel						: https://footballpedia.netlify.app
