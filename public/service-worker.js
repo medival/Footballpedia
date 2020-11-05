@@ -114,6 +114,15 @@ if (workbox) {
 		})
 	);
 	// Cache Assets CSS
+
+	// Cache Assets JS
+	workbox.routing.registerRoute(
+		new RegExp(".*.js"),
+		workbox.strategies.cacheFirst({
+			cacheName: "js",
+		})
+	);
+	// Cache Assets JS
 } else {
 	console.log(`Workbox fail to load`);
 }
