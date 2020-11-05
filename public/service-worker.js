@@ -106,14 +106,14 @@ if (workbox) {
 	);
 	// End of Cache Images
 
-	// Cache Assets JS,CSS
+	// Cache Assets CSS
 	workbox.routing.registerRoute(
-		/\.(?:js|css)$/,
+		/\.(?:css)$/,
 		workbox.strategies.cacheFirst({
 			cacheName: "static-resources",
 		})
 	);
-	// Cache Assets JS,CSS
+	// Cache Assets CSS
 } else {
 	console.log(`Workbox fail to load`);
 }
