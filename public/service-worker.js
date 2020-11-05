@@ -79,15 +79,6 @@ if (workbox) {
 	);
 	// End of API Football
 
-	// Cache Pages
-	workbox.routing.registerRoute(
-		new RegExp("/pages/"),
-		workbox.strategies.staleWhileRevalidate({
-			cacheName: "pages",
-		})
-	);
-	// End of Cache Pages
-
 	// Cache Images
 	workbox.routing.registerRoute(
 		/.*(?:png|gif|jpg|jpeg|svg)$/,
