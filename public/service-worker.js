@@ -106,20 +106,11 @@ if (workbox) {
 	);
 	// End of Cache Images
 
-	// Cache Assets CSS
-	workbox.routing.registerRoute(
-		/\.(?:css)$/,
-		workbox.strategies.cacheFirst({
-			cacheName: "static-resources",
-		})
-	);
-	// Cache Assets CSS
-
 	// Cache Assets JS
 	workbox.routing.registerRoute(
-		new RegExp(".*.js"),
-		workbox.strategies.cacheFirst({
-			cacheName: "js",
+		/\.(?:js|css)$/,
+		workbox.strategies.staleWhileRevalidate({
+			cacheName: "static-resources",
 		})
 	);
 	// Cache Assets JS
