@@ -17,10 +17,10 @@ if ("serviceWorker" in navigator) {
 function requestPermisssion() {
 	if ("Notification" in window) {
 		Notification.requestPermission().then((result) => {
-			if (result == "denied") {
+			if (result === "denied") {
 				console.log("Notification are blocked");
 				return;
-			} else if (result == "default") {
+			} else if (result === "default") {
 				console.log("User close the dialog box");
 				return;
 			}
