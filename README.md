@@ -1,3 +1,8 @@
-# Footballpedia
+# Description
+Footballpedia - providing a team and player information joining torunament UEFA Champions and Premier League
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/46177315-f6fc-4c38-b3e2-fa7ee2a57721/deploy-status)](https://app.netlify.com/sites/footballpedia/deploys)
+A submission Dicoding from class "Membangung Progressive Web Apps (MPVA)". submission has been accepted and repos still in development
+
+### Live Preview
+
+[Live Preview](https://footballpedia-4a00a.web.app/)
