@@ -37,34 +37,6 @@ function cacheCompetition(id) {
 
 // Request Data
 function getTeams(competitionId) {
-	if ("caches" in window) {
-		caches
-			.match(`${baseUrl}competitions/${competitionId}/teams`)
-			.then((response) => {
-				if (response) {
-					response.json().then((data) => {
-						let teamsHTML = "";
-						let leagueName = data.competition.name;
-
-						data.teams.forEach((team) => {
-							if (
-								team.crestUrl !== null &&
-								team.crestUrl !== ""
-							) {
-								teamsHTML += inputCards(team);
-							} else {
-								console.log(`${team.name} dont have logo`);
-							}
-						});
-						document.getElementById("teams").innerHTML = teamsHTML;
-						document.getElementById(
-							"league-name"
-						).innerText = leagueName;
-					});
-				}
-			});
-	}
-
 	fetchApi(baseUrl, competitionId)
 		.then(status)
 		.then(json)
