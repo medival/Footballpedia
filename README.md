@@ -1,7 +1,7 @@
 # Description
 Footballpedia - providing a team and player information joining torunament UEFA Champions and Premier League
 
-A submission Dicoding from class "Membangun Progressive Web Apps (MPVA)". submission has been accepted and repos still in development
+A submission Dicoding from class "Membangun Progressive Web Apps (MPWA)". submission has been accepted and repos still in development
 
 ### Live Preview
 
